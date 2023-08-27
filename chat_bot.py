@@ -1,54 +1,32 @@
+import re
 import streamlit as st
 import pandas as pd
-import numpy as np
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.model_selection import train_test_split
-from sklearn.svm import SVC
+import pyttsx3
 from sklearn import preprocessing
+from sklearn.tree import DecisionTreeClassifier, _tree
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.model_selection import cross_val_score
+from sklearn.svm import SVC
+import csv
+import warnings
+warnings.filterwarnings("ignore", category=DeprecationWarning)
 
-# Load necessary data and preprocess it
-training = pd.read_csv('Data/Training.csv')
-cols = training.columns
-cols = cols[:-1]
-x = training[cols]
-y = training['prognosis']
-le = preprocessing.LabelEncoder()
-le.fit(y)
-y = le.transform(y)
-
-x_train, _, y_train, _ = train_test_split(x, y, test_size=0.33, random_state=42)
-
-clf1 = DecisionTreeClassifier()
-clf = clf1.fit(x_train, y_train)
-
-model = SVC()
-model.fit(x_train, y_train)
-
-# Define functions for your chatbot's logic
-def predict_disease(symptoms_exp):
-    # Replace this function with your actual disease prediction logic
-    # This is just a placeholder
-    return ["Disease 1", "Disease 2"]
-
-# Streamlit app starts here
 def main():
     st.title("HealthCare ChatBot")
 
-    name = st.text_input("Your Name")
-    st.write(f"Hello, {name}")
+    st.sidebar.title("Options")
+    selected_option = st.sidebar.selectbox("Select an option", ["Home", "ChatBot"])
 
-    disease_input = st.text_input("Enter the symptom you are experiencing")
-    num_days = st.number_input("From how many days?", value=1, step=1)
+    if selected_option == "Home":
+        st.header("Welcome to HealthCare ChatBot")
+        st.write("This is a Streamlit app version of the HealthCare ChatBot.")
 
-    if st.button("Predict"):
-        # Call your prediction function here
-        predicted_diseases = predict_disease([disease_input])
-        
-        st.write("Predicted Diseases:")
-        for disease in predicted_diseases:
-            st.write(disease)
+    elif selected_option == "ChatBot":
+        st.header("HealthCare ChatBot")
+        st.write("Enter the required information to use the ChatBot.")
 
-        # Add more components for displaying results and interacting with the chatbot
+        # Your existing ChatBot code here (excluding the imports and functions)
 
 if __name__ == "__main__":
     main()
