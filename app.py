@@ -134,7 +134,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 # Load the dataset into a pandas dataframe
-file_name = r"Code\dataset.xlsx"
+file_name = r"dataset.xlsx"
 df = pd.read_excel(file_name, engine='openpyxl')
 
 # Get all unique symptoms
